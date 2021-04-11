@@ -92,7 +92,7 @@ GtkButton *load_image_button();
  * @post
  * @param p_table
  */
-void create_table(ViewOXO *p_view);
+void create_table(ViewOXO *p_view, GtkWidget **p_button);
 
 /**
  * @fn void create_principal_box(GtkWidget*, GtkWidget*, GtkWidget*, GtkWidget*)
@@ -117,6 +117,16 @@ void create_principal_box(ViewOXO *p_view);
  * @param p_verticalBox
  */
 void draw_window(ViewOXO *p_view, GtkWidget *p_window);
+
+/**
+ * @fn void create_new_game_button(ViewOXO*)
+ * @brief
+ *
+ * @pre
+ * @post
+ * @param p_view
+ */
+void create_new_game_button(ViewOXO *p_view);
 
 
 #endif /* VIEW_H_ */

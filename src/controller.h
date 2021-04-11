@@ -29,8 +29,6 @@
 typedef struct controller_t{
 	struct view_t *s_view; /**< vue du OXO */
 	ModelOXO *s_model; /**< modèle du OXO*/
-	GtkWidget *s_addButton; /**< ajout d'une validation */
-	GtkWidget *s_newGame; /**< bouton nouvelle partie */
 }ControllerOXO;
 
 /**
@@ -56,7 +54,7 @@ ControllerOXO *create_controller(struct view_t *p_view, ModelOXO *p_model);
  * @param p_model le modèle du OXO à prendre en compte.
  * @param p_data pointeur vers le controller
  */
-void click_grid(GtkWidget *p_widget, ModelOXO *p_model, gpointer p_data);
+void click_grid(GtkWidget *p_widget, gpointer p_data);
 
 /**
  * @fn void click_new_game(GtkWidget*, gpointer)

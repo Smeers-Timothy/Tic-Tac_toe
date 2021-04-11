@@ -21,7 +21,6 @@
 
 struct view_t{
 	ModelOXO *s_model; /**< Modèle du OXO */
-	GtkWidget *s_button[BUTTON_NBR];
 	GtkWidget *s_table;
 	GtkWidget *s_new_game_button;
 	GtkWidget *s_verticalBox;
@@ -45,7 +44,7 @@ void update(ViewOXO *p_view){
 
 }
 
-void destroy_window(GtkWidget *pF, gpointer data){
+void destroy_window(GtkWidget *p_widget, gpointer p_data){
 
 	gtk_main_quit();
 }
@@ -57,8 +56,6 @@ GtkWidget *create_window(){
 	gtk_window_set_default_size(GTK_WINDOW(l_window), X_WINDOW_SIZE, Y_WINDOW_SIZE);
 	gtk_window_set_position(l_window, GTK_WIN_POS_CENTER_ALWAYS);
 	gtk_window_set_resizable (GTK_WINDOW(l_window), FALSE);
-
-	g_signal_connect(G_OBJECT(l_window), "destroy", G_CALLBACK(destroy_window), NULL);
 
 	return(l_window);
 }
@@ -82,33 +79,39 @@ GtkButton *load_image_button(){
 	return(GTK_BUTTON(l_button));
 }
 
-void create_table(ViewOXO *p_view){
+void create_table(ViewOXO *p_view, GtkWidget **p_button){
 
 	p_view->s_table = gtk_table_new(ROW, COLUMN, TRUE);
 
 	for(unsigned int i = 0, k = 0, row = 0 ; row < NBR_BUTTON ; i+=2, row+=2){
 
-		p_view->s_button[row] = (GtkWidget*)load_image_button();
-		p_view->s_button[row+1] = (GtkWidget*)load_image_button();
+		p_button[row] = (GtkWidget*)load_image_button();
+		p_button[row+1] = (GtkWidget*)load_image_button();
 
 		if(i == 4){
 			i = 0; k++;
 		}
-		gtk_table_attach(GTK_TABLE(p_view->s_table), p_view->s_button[row], i, i+1, k,
+		gtk_table_attach(GTK_TABLE(p_view->s_table), p_button[row], i, i+1, k,
 				k+1, GTK_FILL, GTK_FILL, 0, 0);
-		gtk_table_attach(GTK_TABLE(p_view->s_table), p_view->s_button[row+1], i+1, i+2, k,
+		gtk_table_attach(GTK_TABLE(p_view->s_table), p_button[row+1], i+1, i+2, k,
 				k+1, GTK_FILL, GTK_FILL, 0, 0);
 	}
 }
 
 void create_principal_box(ViewOXO *p_view){
 
-	p_view->s_new_game_button = gtk_button_new_with_label("Nouvelle Partie");
 	p_view->s_verticalBox = gtk_vbox_new(FALSE, 1);
 	p_view->s_horizontalBox = gtk_hbox_new(TRUE, 1);
 	gtk_box_pack_start(GTK_BOX(p_view->s_verticalBox), p_view->s_table, TRUE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(p_view->s_verticalBox), p_view->s_horizontalBox, TRUE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(p_view->s_horizontalBox), p_view->s_new_game_button, TRUE, FALSE, 4);
+}
+
+void create_new_game_button(ViewOXO *p_view){
+
+	p_view->s_new_game_button = gtk_button_new_with_label("Nouvelle Partie");
+	g_signal_connect(G_OBJECT(p_view->s_new_game_button), "clicked", G_CALLBACK(click_new_game), p_view);
+
 }
 
 void draw_window(ViewOXO *p_view, GtkWidget *p_window){

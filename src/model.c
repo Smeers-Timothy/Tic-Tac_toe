@@ -43,12 +43,13 @@ ModelOXO *create_model(unsigned int p_player){
 
 void add_action(ModelOXO *p_model){
 	assert(p_model != NULL);
+	printf("toto\n");
 
-	if(p_model->s_placed < MAX_CASE)
-		p_model->s_placed++;
+//	if(p_model->s_placed < MAX_CASE)
+//		p_model->s_placed++;
 
-	p_model->s_player = (p_model->s_player == s_playerO)
-							? s_playerX : s_playerO;
+//	p_model->s_player = (p_model->s_player == s_playerO)
+//									? s_playerX : s_playerO;
 }
 
 void new_game(ModelOXO *p_model){
