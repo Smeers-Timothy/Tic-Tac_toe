@@ -28,11 +28,19 @@ void click_grid(GtkWidget *p_widget, gpointer p_data){
 	assert(p_widget != NULL && p_data != NULL);
 
 	ControllerOXO *l_controller = (ControllerOXO *)p_data;
+	printf("nbr : %d\n", get_button_number(l_controller));
+	add_action(l_controller->s_model, get_button_number(l_controller));
+}
 
-	add_action(l_controller->s_model);
-	update(l_controller->s_view);
+void set_button_number(ControllerOXO *p_controller, unsigned int p_count){
+	p_controller->s_number = p_count;
+}
+
+unsigned int get_button_number(ControllerOXO *p_controller){
+	return(p_controller->s_number);
 }
 
 void click_new_game(GtkWidget *p_widget, gpointer p_data){
+
 
 }

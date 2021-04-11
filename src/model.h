@@ -8,6 +8,7 @@
 #ifndef MODEL_H_
 #define MODEL_H_
 
+#define NBR_BUTTON 16
 /**
  * @file model.h
  * @brief Modèle (pattern MVC) pour la gestion d'un Tic-Tac_Toe
@@ -34,7 +35,8 @@ typedef enum Player_t{
 typedef struct model_t{
     Player s_player; /**< Le joueur  */
 	unsigned int s_placed; /**< Le nombre de bouton déja instancier */
-	char *s_image;
+	GtkWidget *s_image;
+	GtkWidget *s_button[NBR_BUTTON];
 }ModelOXO;
 
 
@@ -52,6 +54,17 @@ typedef struct model_t{
 ModelOXO *create_model(unsigned int p_player);
 
 /**
+ * @fn GtkWidget create_image*(const gchar)
+ * @brief
+ *
+ * @pre
+ * @post
+ * @param p_image
+ * @return
+ */
+GtkWidget *create_image(const gchar *p_image);
+
+/**
  * @fn void add_action(ModelOXO*)
  * @brief Prévient que le joueur à jouer une case du OXO
  *
@@ -59,7 +72,7 @@ ModelOXO *create_model(unsigned int p_player);
  * @post /
  * @param p_model le modèle à modifier
  */
-void add_action(ModelOXO *p_model);
+void add_action(ModelOXO *p_model, guint p_number);
 
 /**
  * @fn void new_game(ModelOXO*)

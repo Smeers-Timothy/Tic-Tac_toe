@@ -20,9 +20,6 @@
  * @date 10/04/2021
  */
 
-/* DEFINE */
-#define BUTTON_NBR 16
-
 /**
  * @struct vue_t
  * @brief Implémentation de la vue du OXO en type opaque

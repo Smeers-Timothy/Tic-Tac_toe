@@ -26,7 +26,6 @@ ViewOXO *s_view;
 ModelOXO *s_model;
 ControllerOXO *s_controller;
 GtkWidget *s_window;
-GtkWidget *s_button[BUTTON_NBR];
 
 int create_MSV(){
 
@@ -62,9 +61,12 @@ int main(int argc, char **argv){
 
 
 	create_new_game_button(s_view);
-	create_table(s_view, s_button);
-	for(unsigned int i = 0; i< NBR_BUTTON; i++)
-		g_signal_connect(G_OBJECT(s_button[i]), "clicked", G_CALLBACK(click_grid), s_controller);
+	create_table(s_view, s_model->s_button);
+
+	for(unsigned int i = 0; i< NBR_BUTTON; i++){
+		set_button_number(s_controller, i);
+		g_signal_connect(G_OBJECT(s_model->s_button[i]), "clicked", G_CALLBACK(click_grid), s_controller);
+	}
 
 	create_principal_box(s_view);
 	draw_window(s_view, s_window);

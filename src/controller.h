@@ -29,6 +29,7 @@
 typedef struct controller_t{
 	struct view_t *s_view; /**< vue du OXO */
 	ModelOXO *s_model; /**< modèle du OXO*/
+	unsigned int s_number;
 }ControllerOXO;
 
 /**
@@ -66,5 +67,27 @@ void click_grid(GtkWidget *p_widget, gpointer p_data);
  * @param p_data pointeur vers le controller
  */
 void click_new_game(GtkWidget *p_widget, gpointer p_data);
+
+/**
+ * @fn void set_button_number(ControllerOXO*, guint*)
+ * @brief
+ *
+ * @pre
+ * @post
+ * @param p_controller
+ * @param p_count
+ */
+void set_button_number(ControllerOXO *p_controller, unsigned int p_count);
+
+/**
+ * @fn unsigned int get_button_number(ControllerOXO*)
+ * @brief
+ *
+ * @pre
+ * @post
+ * @param p_controller
+ * @return
+ */
+unsigned int get_button_number(ControllerOXO *p_controller);
 
 #endif /* CONTROLLER_H_ */
