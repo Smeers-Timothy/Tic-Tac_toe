@@ -11,7 +11,6 @@
 #include <gtk/gtk.h>
 
 #include "controller.h"
-#include "model.h"
 
 /**
  * @file view.h
@@ -31,7 +30,6 @@
  *
  */
 typedef struct view_t ViewOXO;
-
 
 /**
  * @fn ViewOXO create_OXO_vue*(ModelOXO*)

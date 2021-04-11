@@ -21,10 +21,8 @@
 
 struct view_t{
 	ModelOXO *s_model; /**< Modèle du OXO */
-	GtkWidget *s_button[BUTTON_NBR]; /**< 16 bouton */
-	GtkWidget *s_label; /**< Affichage de l'image X ou O */
+	GtkWidget *s_button[BUTTON_NBR];
 	GtkWidget *s_table;
-	GdkPixbuf *s_image[BUTTON_NBR];
 	GtkWidget *s_new_game_button;
 	GtkWidget *s_verticalBox;
 	GtkWidget *s_horizontalBox;
