@@ -27,21 +27,14 @@ typedef enum Player_t{
 }Player;
 
 /**
- * @struct image_t
- * @brief Enumeration de toutes les images
- *
- */
-typedef struct image_t ImageOXO;
-
-/**
  * @struct model_t
  * @brief Implémentation du modèle pour le OXO.
  *
  */
 typedef struct model_t{
     Player s_player; /**< Le joueur  */
-	ImageOXO *s_image; /**< Les images à géré */
 	unsigned int s_placed; /**< Le nombre de bouton déja instancier */
+	char *s_image;
 }ModelOXO;
 
 
