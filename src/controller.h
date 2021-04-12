@@ -55,7 +55,7 @@ ControllerOXO *create_controller(struct view_t *p_view, ModelOXO *p_model);
  * @param p_model le modèle du OXO à prendre en compte.
  * @param p_data pointeur vers le controller
  */
-void click_grid(GtkWidget *p_widget, gpointer p_data);
+void click_grid(GtkWidget *p_widget, gpointer *p_data);
 
 /**
  * @fn void click_new_game(GtkWidget*, gpointer)

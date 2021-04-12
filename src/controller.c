@@ -24,12 +24,14 @@ ControllerOXO *create_controller(struct view_t *p_view, ModelOXO *p_model){
 	return(l_controller);
 }
 
-void click_grid(GtkWidget *p_widget, gpointer p_data){
+void click_grid(GtkWidget *p_widget, gpointer *p_data){
 	assert(p_widget != NULL && p_data != NULL);
 
 	ControllerOXO *l_controller = (ControllerOXO *)p_data;
-	printf("nbr : %d\n", get_button_number(l_controller));
+
+	set_button_number(l_controller, g_object_get_data(p_widget, "position"));
 	add_action(l_controller->s_model, get_button_number(l_controller));
+
 }
 
 void set_button_number(ControllerOXO *p_controller, unsigned int p_count){

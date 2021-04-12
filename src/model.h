@@ -35,7 +35,7 @@ typedef enum Player_t{
 typedef struct model_t{
     Player s_player; /**< Le joueur  */
 	unsigned int s_placed; /**< Le nombre de bouton déja instancier */
-	GtkWidget *s_image;
+	GtkWidget *s_image[NBR_BUTTON];
 	GtkWidget *s_button[NBR_BUTTON];
 }ModelOXO;
 
