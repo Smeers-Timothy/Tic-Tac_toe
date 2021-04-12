@@ -1,10 +1,10 @@
-/*
- * view.c
- *
- *  Created on: 9 avr. 2021
- *      Author: tim04
+/**
+ * @file view.c
+ * @brief Vue (pattern MVC) pour la gestion d'un Tic-Tac_Toe
+ * @author Smeers Timothy
+ * @version 0.1
+ * @date Created on: 9 avr. 2021
  */
-
 #include <stdlib.h>
 #include <gtk/gtk.h>
 #include <assert.h>
@@ -32,19 +32,17 @@ ViewOXO *create_view(ModelOXO *p_model){
 
 	ViewOXO *l_view = malloc(sizeof(ViewOXO));
 
-	if(l_view == NULL)
+	if(l_view == NULL){
+		printf("Erreur d'allocation !\n");
 		return(NULL);
-
+	}
 	l_view->s_model = p_model;
 
 	return(l_view);
 }
 
-void update(ViewOXO *p_view){
-
-}
-
 void destroy_window(GtkWidget *p_widget, gpointer p_data){
+	assert(p_widget != NULL);
 
 	gtk_main_quit();
 }
@@ -52,6 +50,11 @@ void destroy_window(GtkWidget *p_widget, gpointer p_data){
 GtkWidget *create_window(){
 
 	GtkWidget *l_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+
+	if(l_window == NULL){
+		printf("Erreur de création de la fenetre !\n");
+		return(NULL);
+	}
 	gtk_window_set_title(GTK_WINDOW(l_window), "OXO");
 	gtk_window_set_default_size(GTK_WINDOW(l_window), X_WINDOW_SIZE, Y_WINDOW_SIZE);
 	gtk_window_set_position(l_window, GTK_WIN_POS_CENTER_ALWAYS);
@@ -68,11 +71,8 @@ GtkButton *load_image_button(){
 		printf("Erreur de chargement de l’image !\n");
 		return(NULL);
 	}
-
 	GdkPixbuf *l_pixbuf = gdk_pixbuf_scale_simple (l_fileImage, 100, 100, GDK_INTERP_NEAREST);
-
 	GtkWidget *l_button = gtk_button_new();
-
 	GtkWidget *l_image = gtk_image_new_from_pixbuf(l_pixbuf);
 	gtk_button_set_image(GTK_BUTTON(l_button), l_image);
 
@@ -80,6 +80,7 @@ GtkButton *load_image_button(){
 }
 
 void create_table(ViewOXO *p_view, GtkWidget **p_button){
+	assert(p_view != NULL && p_button > 0);
 
 	p_view->s_table = gtk_table_new(ROW, COLUMN, TRUE);
 
@@ -99,6 +100,7 @@ void create_table(ViewOXO *p_view, GtkWidget **p_button){
 }
 
 void create_principal_box(ViewOXO *p_view){
+	assert(p_view != NULL);
 
 	p_view->s_verticalBox = gtk_vbox_new(FALSE, 1);
 	p_view->s_horizontalBox = gtk_hbox_new(TRUE, 1);
@@ -108,15 +110,15 @@ void create_principal_box(ViewOXO *p_view){
 }
 
 void create_new_game_button(ViewOXO *p_view){
+	assert(p_view != NULL);
 
 	p_view->s_new_game_button = gtk_button_new_with_label("Nouvelle Partie");
 	g_signal_connect(G_OBJECT(p_view->s_new_game_button), "clicked", G_CALLBACK(click_new_game), p_view);
 }
 
 void draw_window(ViewOXO *p_view, GtkWidget *p_window){
+	assert(p_view != NULL && p_window != NULL);
 
 	gtk_container_add(GTK_CONTAINER(p_window), GTK_WIDGET(p_view->s_verticalBox));
 	gtk_widget_show_all(p_window);
 }
-
-

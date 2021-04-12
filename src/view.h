@@ -1,10 +1,10 @@
-/*
- * view.h
- *
- *  Created on: 9 avr. 2021
- *      Author: tim04
+/**
+ * @file view.h
+ * @brief Vue (pattern MVC) pour la gestion d'un Tic-Tac_Toe
+ * @author Smeers Timothy
+ * @version 0.1
+ * @date Created on: 9 avr. 2021
  */
-
 #ifndef VIEW_H_
 #define VIEW_H_
 
@@ -13,18 +13,8 @@
 #include "controller.h"
 
 /**
- * @file view.h
- * @brief Vue (pattern MVC) pour la gestion d'un Tic-Tac_Toe
- * @author Smeers Timothy
- * @version 0.1
- * @date 10/04/2021
- */
-
-/**
  * @struct vue_t
  * @brief Implémentation de la vue du OXO en type opaque
- *
- *
  */
 typedef struct view_t ViewOXO;
 
@@ -33,7 +23,7 @@ typedef struct view_t ViewOXO;
  * @brief Crée une vue pour le OXO en fonction d'un certain modèle.
  *
  * @pre p_model != NULL
- * @post /
+ * @post Une vue est créée
  * @param s_model le modèle du OXO à prendre en compte.
  * @return ViewOXO *, un pointeur sur une nouvelle vue.
  *         NULL en cas d'erreur.
@@ -41,89 +31,78 @@ typedef struct view_t ViewOXO;
 ViewOXO *create_view(ModelOXO *p_model);
 
 /**
- * @fn void update(ViewOXO*)
- * @brief Redessine la vue suite à un changement.
- *
- * @pre /
- * @post /
- * @param p_view la vue à redessiner
- */
-void update(ViewOXO *p_view);
-
-/**
  * @fn void destroy_window(GtkWidget*, gpointer)
- * @brief
+ * @brief Détruit la fenetre de jeux et tout ses enfant
  *
- * @pre
- * @post
- * @param pF
- * @param data
+ * @pre p_widget != NULL
+ * @post p_widget == NULL
+ * @param p_widget un pointeur sur la fenetre GtkWidget
+ * @param p_data pointeur vers le widget
  */
-void destroy_window(GtkWidget *pF, gpointer data);
+void destroy_window(GtkWidget *p_widget, gpointer p_data);
 
 /**
  * @fn GtkWidget create_window*()
- * @brief
+ * @brief Crée et initalise la fenetre
  *
- * @pre
- * @post
- * @return
+ * @pre /
+ * @post la fenetre est créée
+ * @return GtkWidget *l_window un pointeur sur la fenetre
+ * 			NULL en cas d'erreur.
  */
 GtkWidget *create_window();
 
 /**
  * @fn GtkButton load_image_button*()
- * @brief
+ * @brief Permet de chargé une image vide et l'atribue dans un bouton
  *
- * @pre
- * @post
- * @return
+ * @pre /
+ * @post un bouton GtkWidget est créé avec une image par defaut
+ * @return GtkWidget *l_button un pointeur sur un bouton
+ * 			NULL en cas d'erreur.
  */
 GtkButton *load_image_button();
 
 /**
- * @fn void create_table(GtkWidget*, GtkWidget*)
- * @brief
+ * @fn void create_table(ViewOXO*, GtkWidget**)
+ * @brief Permet de créé une table comprenant les boutons
  *
- * @pre
- * @post
- * @param p_table
+ * @pre p_view != NULL && p_button > 0
+ * @post la table est créé avec n boutton
+ * @param p_view un pointeur sur la vue du OXO à prendre en compte
+ * @param p_button un tableau de GtkWidget contenant les boutons
  */
 void create_table(ViewOXO *p_view, GtkWidget **p_button);
 
 /**
- * @fn void create_principal_box(GtkWidget*, GtkWidget*, GtkWidget*, GtkWidget*)
- * @brief
+ * @fn void create_principal_box(ViewOXO*)
+ * @brief Création de la box principale comprenant tout les boutons
  *
- * @pre
- * @post
- * @param p_new_game_button
- * @param p_verticalBox
- * @param p_horizontalBox
- * @param p_table
+ * @pre p_view != NULL
+ * @post tout les bouton sont créé et placer dans la fenetre
+ * @param p_view un pointeur sur la vue du OXO à prendre en compte
  */
 void create_principal_box(ViewOXO *p_view);
 
 /**
- * @fn void draw_window(GtkWidget*, GtkWidget*)
- * @brief
- *
- * @pre
- * @post
- * @param p_window
- * @param p_verticalBox
- */
-void draw_window(ViewOXO *p_view, GtkWidget *p_window);
-
-/**
  * @fn void create_new_game_button(ViewOXO*)
- * @brief
+ * @brief Création du bouton de nouvelle artie
  *
- * @pre
- * @post
- * @param p_view
+ * @pre p_view != NULL
+ * @post le bouton nouvelle partie est créé
+ * @param p_view un pointeur sur la vue du OXO à prendre en compte
  */
 void create_new_game_button(ViewOXO *p_view);
 
+/**
+ * @fn void draw_window(ViewOXO*, GtkWidget*)
+ * @brief Permet de dessiner la fenetre principale
+ *
+ * @pre p_view != NULL && p_window != NULL
+ * @post La fenetre principale s'affiche à l'écran
+ * @param p_view un pointeur sur la vue du OXO à prendre en compte
+ * @param p_window La fenetre à dessiner
+ */
+void draw_window(ViewOXO *p_view, GtkWidget *p_window);
 
 #endif /* VIEW_H_ */

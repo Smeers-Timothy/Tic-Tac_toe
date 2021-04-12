@@ -15,8 +15,10 @@ ControllerOXO *create_controller(struct view_t *p_view, ModelOXO *p_model){
 
 	ControllerOXO *l_controller = malloc(sizeof(ControllerOXO));
 
-	if(l_controller == NULL)
-		return NULL;
+	if(l_controller == NULL){
+		printf("Erreur d'allocation de mémoire !\n");
+		return(NULL);
+	}
 
 	l_controller->s_view = p_view;
 	l_controller->s_model = p_model;
@@ -25,10 +27,14 @@ ControllerOXO *create_controller(struct view_t *p_view, ModelOXO *p_model){
 }
 
 void set_button_number(ControllerOXO *p_controller, unsigned int p_count){
+	assert(p_controller != NULL && (p_count >= 0 || p_count <= 16));
+
 	p_controller->s_number = p_count;
 }
 
 unsigned int get_button_number(ControllerOXO *p_controller){
+	assert(p_controller != NULL);
+
 	return(p_controller->s_number);
 }
 
