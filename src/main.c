@@ -54,10 +54,15 @@ int main(int argc, char **argv){
 	create_new_game_button(s_view);
 	create_table(s_view, s_model->s_button);
 
+	gulong l_id;
+	gulong l_new_game;
+
 	for(unsigned int i = 0; i< NBR_BUTTON; i++){
+		l_id = g_signal_connect(G_OBJECT(s_model->s_button[i]), "clicked", G_CALLBACK(click_grid), s_controller);
+		g_object_set_data(G_OBJECT(s_model->s_button[i]), "button_id", (gpointer)l_id);
 		g_object_set_data(G_OBJECT(s_model->s_button[i]), "position", (gpointer)i);
-		g_signal_connect(G_OBJECT(s_model->s_button[i]), "clicked", G_CALLBACK(click_grid), s_controller);
 	}
+	l_new_game = g_signal_connect(G_OBJECT(s_model->s_newGameButton), "clicked", G_CALLBACK(click_new_game), s_model);
 
 	create_principal_box(s_view);
 	draw_window(s_view, s_window);

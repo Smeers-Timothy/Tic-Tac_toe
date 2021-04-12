@@ -38,39 +38,6 @@ typedef struct controller_t{
 ControllerOXO *create_controller(struct view_t *p_view, ModelOXO *p_model);
 
 /**
- * @fn void set_button_number(ControllerOXO*, unsigned int)
- * @brief Setter du numéro du bouton selectionné
- *
- * @pre p_controller != NULL && (p_count >= 0 || p_count <= 16)
- * @post /
- * @param p_controller Un pointeur sur le controller à prendre en compte
- * @param p_count une valeur entière à setter
- */
-void set_button_number(ControllerOXO *p_controller, unsigned int p_count);
-
-/**
- * @fn unsigned int get_button_number(ControllerOXO*)
- * @brief Getter du numéro du bouton selectionné
- *
- * @pre p_controller != NULL
- * @post /
- * @param p_controller n pointeur sur le controller à prendre en compte
- * @return unsigned int p_controller->s_number La nouvelle valeur du nombre
- */
-unsigned int get_button_number(ControllerOXO *p_controller);
-
-/**
- * @fn void click_grid(GtkWidget*, ModelOXO*, gpointer)
- * @brief Signal pour un click sur la grille
- *
- * @pre p_model != NULL && p_widget != NULL && p_data != NULL
- * @post
- * @param p_widget le widget en cause
- * @param p_model le modèle du OXO à prendre en compte.
- * @param p_data pointeur vers le controller
- */
-
-/**
  * @fn void click_grid(GtkWidget*, gpointer)
  * @brief Signal pour un click sur un bouton de la table
  *

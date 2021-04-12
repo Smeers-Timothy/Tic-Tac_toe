@@ -21,10 +21,9 @@
 
 struct view_t{
 	ModelOXO *s_model; /**< Modèle du OXO */
-	GtkWidget *s_table;
-	GtkWidget *s_new_game_button;
-	GtkWidget *s_verticalBox;
-	GtkWidget *s_horizontalBox;
+	GtkWidget *s_table; /**< La table */
+	GtkWidget *s_verticalBox; /**< Une vertical boxe */
+	GtkWidget *s_horizontalBox; /**< Une horizontale boxe */
 };
 
 ViewOXO *create_view(ModelOXO *p_model){
@@ -106,14 +105,13 @@ void create_principal_box(ViewOXO *p_view){
 	p_view->s_horizontalBox = gtk_hbox_new(TRUE, 1);
 	gtk_box_pack_start(GTK_BOX(p_view->s_verticalBox), p_view->s_table, TRUE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(p_view->s_verticalBox), p_view->s_horizontalBox, TRUE, FALSE, 0);
-	gtk_box_pack_start(GTK_BOX(p_view->s_horizontalBox), p_view->s_new_game_button, TRUE, FALSE, ROW);
+	gtk_box_pack_start(GTK_BOX(p_view->s_horizontalBox), p_view->s_model->s_newGameButton, TRUE, FALSE, ROW);
 }
 
 void create_new_game_button(ViewOXO *p_view){
 	assert(p_view != NULL);
 
-	p_view->s_new_game_button = gtk_button_new_with_label("Nouvelle Partie");
-	g_signal_connect(G_OBJECT(p_view->s_new_game_button), "clicked", G_CALLBACK(click_new_game), p_view);
+	p_view->s_model->s_newGameButton = gtk_button_new_with_label("Nouvelle Partie");
 }
 
 void draw_window(ViewOXO *p_view, GtkWidget *p_window){

@@ -30,6 +30,8 @@ typedef struct model_t{
 	unsigned int s_placed; /**< Le nombre de bouton déja instancier */
 	GtkWidget *s_image; /**< L'image à afficher  */
 	GtkWidget *s_button[NBR_BUTTON]; /**< Le tableau de bouton de jeux */
+	GtkWidget *s_newGameButton; /**< Le bouton de nouvelle partie */
+	int s_selectedButton[NBR_BUTTON+1];
 }ModelOXO;
 
 /**
@@ -57,15 +59,16 @@ GtkWidget *create_image(const gchar *p_image);
 ModelOXO *create_model(unsigned int p_player);
 
 /**
- * @fn void add_action(ModelOXO*, guint)
+ * @fn void add_action(ModelOXO*, guint, gulong)
  * @brief Ajoute une image X | O dans la case selectionner selon le joueur
  *
- * @pre p_model != NULL && (p_number >= 0 || p_number <= NBR_BUTTON)
+ * @pre joute une image X | O dans la case selectionner selon le joueur
  * @post Une image est placée à l'endroit selectionnée
  * @param p_model Un pointeur sur le modele à prendre en compte
  * @param p_number La case selectionnée
+ * @param p_id L'id du signal
  */
-void add_action(ModelOXO *p_model, guint p_number);
+void add_action(ModelOXO *p_model, guint p_number, gulong p_id);
 
 /**
  * @fn void new_game(ModelOXO*)
@@ -74,7 +77,9 @@ void add_action(ModelOXO *p_model, guint p_number);
  * @pre p_model != NULL
  * @post Le jeux est réinitialisé
  * @param p_model Un pointeur sur le modele à prendre en compte
+ * @param p_number La case selectionnée
+ * @param p_id L'id du signal
  */
-void new_game(ModelOXO *p_model);
+void new_game(ModelOXO *p_model, guint p_number, gulong p_id);
 
 #endif /* MODEL_H_ */

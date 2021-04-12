@@ -45,28 +45,45 @@ ModelOXO *create_model(unsigned int p_player){
 	return(l_model);
 }
 
-void add_action(ModelOXO *p_model, guint p_number){
+void add_action(ModelOXO *p_model, guint p_number, gulong p_id){
 	assert(p_model != NULL && (p_number >= 0 || p_number <= NBR_BUTTON));
 
 	if(p_model->s_placed < NBR_BUTTON) {
 
 		if(p_model->s_player == s_playerO){
 			p_model->s_image = create_image("images/o.png");
-			gtk_button_set_image(p_model->s_button[p_number], p_model->s_image);
+			gtk_button_set_image(GTK_BUTTON(p_model->s_button[p_number]), p_model->s_image);
 		}else{
 			p_model->s_image = create_image("images/x.png");
-			gtk_button_set_image(p_model->s_button[p_number], p_model->s_image);
+			gtk_button_set_image(GTK_BUTTON(p_model->s_button[p_number]), p_model->s_image);
 		}
 		p_model->s_placed++;
-				p_model->s_player = (p_model->s_player == s_playerO)
-															? s_playerX : s_playerO;
+		p_model->s_player = (p_model->s_player == s_playerO) ? s_playerX : s_playerO;
 	}
+	g_signal_handler_block(p_model->s_button[p_number], p_id);
+	p_model->s_selectedButton[p_number] = p_id;
 
 }
 
-void new_game(ModelOXO *p_model){
+
+
+void new_game(ModelOXO *p_model, guint p_number, gulong p_id){
 	assert(p_model != NULL);
 
 	p_model->s_placed = 0;
 	p_model->s_player = s_playerO;
+	p_model->s_image = create_image("images/default.png");
+
+
+	gtk_button_set_image(GTK_BUTTON(p_model->s_button[p_number]), p_model->s_image);
+
+	if(g_signal_handler_is_connected(p_model->s_button[p_number], p_id) == TRUE){
+		int l_tmp = -1;
+
+		if(p_model->s_selectedButton[p_number] <= p_id && l_tmp != p_model->s_selectedButton[p_number] ){
+			g_signal_handler_unblock(p_model->s_button[p_number],p_id);
+			l_tmp = p_model->s_selectedButton[p_number];
+		}
+	}
 }
+

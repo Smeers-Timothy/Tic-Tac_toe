@@ -26,30 +26,27 @@ ControllerOXO *create_controller(struct view_t *p_view, ModelOXO *p_model){
 	return(l_controller);
 }
 
-void set_button_number(ControllerOXO *p_controller, unsigned int p_count){
-	assert(p_controller != NULL && (p_count >= 0 || p_count <= 16));
-
-	p_controller->s_number = p_count;
-}
-
-unsigned int get_button_number(ControllerOXO *p_controller){
-	assert(p_controller != NULL);
-
-	return(p_controller->s_number);
-}
-
 void click_grid(GtkWidget *p_widget, gpointer p_data){
 	assert(p_widget != NULL && p_data != NULL);
 
 	ControllerOXO *l_controller = (ControllerOXO *)p_data;
-	unsigned int l_number = g_object_get_data(p_widget, "position");
 
-	set_button_number(l_controller, l_number);
-	printf("toto : %d\n",l_number);
-	add_action(l_controller->s_model, get_button_number(l_controller));
+	gpointer l_id = g_object_get_data(G_OBJECT(p_widget), "button_id");
+	gpointer l_number = g_object_get_data(G_OBJECT(p_widget), "position");
+	add_action(l_controller->s_model, l_number, l_id);
 }
 
 void click_new_game(GtkWidget *p_widget, gpointer p_data){
+	assert(p_widget != NULL && p_data != NULL);
 
+	ModelOXO *l_model = (ModelOXO *)p_data;
+	gpointer l_id;
+	gpointer l_number;
 
+	for(unsigned int i = 0; i< NBR_BUTTON; i++){
+		gpointer l_number = g_object_get_data(G_OBJECT(l_model->s_button[i]), "position");
+		l_id = g_object_get_data(G_OBJECT(l_model->s_button[i]), "button_id");
+		new_game(l_model, l_number, l_id);
+		l_model->s_selectedButton[i] = -1;
+	}
 }
