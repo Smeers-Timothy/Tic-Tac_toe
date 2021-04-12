@@ -55,10 +55,8 @@ int main(int argc, char **argv){
 	create_table(s_view, s_model->s_button);
 
 	for(unsigned int i = 0; i< NBR_BUTTON; i++){
-		g_object_set_data(G_OBJECT(s_model->s_button[i]), "position", i);
-//		g_signal_connect(G_OBJECT(s_model->s_button[i]), "clicked", G_CALLBACK(click_grid), s_controller);
-		gtk_widget_set_events(s_model->s_button[i], GDK_BUTTON_PRESS_MASK);
-		g_signal_connect(G_OBJECT(s_model->s_button[i]), "button_press_event", G_CALLBACK(click_grid), s_controller);
+		g_object_set_data(G_OBJECT(s_model->s_button[i]), "position", (gpointer)i);
+		g_signal_connect(G_OBJECT(s_model->s_button[i]), "clicked", G_CALLBACK(click_grid), s_controller);
 	}
 
 	create_principal_box(s_view);
