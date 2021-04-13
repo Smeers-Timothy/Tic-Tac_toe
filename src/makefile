@@ -1,34 +1,31 @@
-### 
-## Makefile skeleton
-## INFO0030: Projet 1
-## 
-### 
-
-## Variables
-
-# Tools & flags
 CC=gcc
-CFLAGS=--std=c99 --pedantic -Wall -W -Wmissing-prototypes
 LD=gcc
+CFLAGS=
 LDFLAGS=
-PACKAGE=`pkg-config --cflags --libs gtk+-2.0`
-LIBS=`pkg-config --libs gtk+-2.0`
+GTKFLAGS=`pkg-config --cflags --libs gtk+-2.0`
+DOXYGEN=doxygen
 
-# Files
-EXEC=GUI
-MODULES=main.c
-OBJECTS=main.o
+all: oxo
 
-## Rules
+oxo: main.o controller.o view.o model.o
+	$(LD) -o oxo main.o view.o controller.o model.o $(LDFLAGS) $(GTKFLAGS)
 
-all: $(EXEC)
+main.o: main.c view.h controller.h model.h
+	$(CC) -c main.c -o main.o $(CFLAGS) $(GTKFLAGS)
 
-GUI: $(OBJECTS)
-	$(LD) -o $(EXEC) $(OBJECTS) $(LDFLAGS)
+controller.o: controller.h controller.c view.h model.h
+	$(CC) -c controller.c -o controller.o $(CFLAGS) $(GTKFLAGS)	
 
-main.o: main.c
-	$(CC) -c main.c -o main.o $(CFLAGS)
+view.o: view.h view.c controller.h model.h
+	$(CC) -c view.c -o view.o $(CFLAGS) $(GTKFLAGS)
+
+model.o: model.h model.c
+	$(CC) -c model.c -o model.o $(CFLAGS) $(GTKFLAGS)
+
+doc: 
+	$(DOXYGEN) doc_conf
 
 clean:
-	rm -f *.o $(EXEC) *~
-
+	rm -f *.o
+	rm -f oxo
+	clear
