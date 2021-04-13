@@ -20,23 +20,12 @@ typedef enum Player_t{
 	s_playerX = 1/**< X */
 }Player;
 
-///**
-// * @struct field_t
-// * @brief Implémentation de tableau de valeur pour le gameboard
-// *
-// */
-//typedef struct field_t{
-//	int s_xCase[NBR_BUTTON+1];
-//	int s_oCase[NBR_BUTTON+1];
-//}Field;
-
 /**
  * @struct model_t
  * @brief Implémentation du modèle pour le OXO.
  *
  */
 typedef struct model_t{
-//	Field s_field;
 	int s_xCase[NBR_BUTTON+1];
 	int s_oCase[NBR_BUTTON+1];
 	int s_oPositif;

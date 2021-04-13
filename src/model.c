@@ -62,18 +62,37 @@ void add_action(ModelOXO *p_model, guint p_number, gulong p_id){
 
 			for(unsigned int i = 0; i< NBR_BUTTON; i++){
 				if(win(p_model, p_model->s_oCase, i) != FALSE){
-					printf("O negatif : %d\n", p_model->s_oNegatif);
-					printf("O positif : %d\n", p_model->s_oPositif);
-					printf("X : %d\n", i);
+
 					p_model->s_image = create_image("images/o_gagnant.png");
 					gtk_button_set_image(GTK_BUTTON(p_model->s_button[p_model->s_oPositif]), p_model->s_image);
 					p_model->s_image = create_image("images/o_gagnant.png");
 					gtk_button_set_image(GTK_BUTTON(p_model->s_button[p_model->s_oNegatif]), p_model->s_image);
 					p_model->s_image = create_image("images/x_gagnant.png");
-					gtk_button_set_image(GTK_BUTTON(p_model->s_button[i]), p_model->s_image);
+					gtk_button_set_image(GTK_BUTTON(p_model->s_button[i]),p_model->s_image);
+					p_model->s_image = create_image("images/default.png");
+
+					i = NBR_BUTTON;
+
+					for(unsigned int j = 0; j<NBR_BUTTON; j++){
+						guint l_number = g_object_get_data(G_OBJECT(p_model->s_button[j]), "position");
+						gulong l_id = g_object_get_data(G_OBJECT(p_model->s_button[j]), "button_id");
+
+						if(g_signal_handler_is_connected(p_model->s_button[l_number], l_id) == TRUE){
+							int l_tmp = -1;
+
+							if(p_model->s_selectedButton[l_number] <= l_id && l_tmp != p_model->s_selectedButton[l_number] ){
+								g_signal_handler_unblock(p_model->s_button[l_number],l_id);
+								l_tmp = p_model->s_selectedButton[l_number];
+							}
+						}
+					}
+					for(unsigned int j = 0; j<NBR_BUTTON; j++){
+						guint l_number = g_object_get_data(G_OBJECT(p_model->s_button[j]), "position");
+						gulong l_id = g_object_get_data(G_OBJECT(p_model->s_button[j]), "button_id");
+						g_signal_handler_block(p_model->s_button[l_number],l_id);
+					}
 				}
 			}
-
 		}else{
 			p_model->s_image = create_image("images/x.png");
 			gtk_button_set_image(GTK_BUTTON(p_model->s_button[p_number]), p_model->s_image);
@@ -81,23 +100,43 @@ void add_action(ModelOXO *p_model, guint p_number, gulong p_id){
 
 			for(unsigned int i = 0; i< NBR_BUTTON; i++){
 				if(win(p_model, p_model->s_oCase, i) != FALSE){
-					printf("O negatif : %d\n", p_model->s_oNegatif);
-					printf("O positif : %d\n", p_model->s_oPositif);
-					printf("X : %d\n", i);
+
 					p_model->s_image = create_image("images/o_gagnant.png");
 					gtk_button_set_image(GTK_BUTTON(p_model->s_button[p_model->s_oPositif]), p_model->s_image);
 					p_model->s_image = create_image("images/o_gagnant.png");
 					gtk_button_set_image(GTK_BUTTON(p_model->s_button[p_model->s_oNegatif]), p_model->s_image);
 					p_model->s_image = create_image("images/x_gagnant.png");
-					gtk_button_set_image(GTK_BUTTON(p_model->s_button[i]), p_model->s_image);
+					gtk_button_set_image(GTK_BUTTON(p_model->s_button[i]),p_model->s_image);
+					p_model->s_image = create_image("images/default.png");
+
+					i = NBR_BUTTON;
+
+					for(unsigned int j = 0; j<NBR_BUTTON; j++){
+						guint l_number = g_object_get_data(G_OBJECT(p_model->s_button[j]), "position");
+						gulong l_id = g_object_get_data(G_OBJECT(p_model->s_button[j]), "button_id");
+
+						if(g_signal_handler_is_connected(p_model->s_button[l_number], l_id) == TRUE){
+							int l_tmp = -1;
+
+							if(p_model->s_selectedButton[l_number] <= l_id && l_tmp != p_model->s_selectedButton[l_number] ){
+								g_signal_handler_unblock(p_model->s_button[l_number],l_id);
+								l_tmp = p_model->s_selectedButton[l_number];
+							}
+						}
+					}
+					for(unsigned int j = 0; j<NBR_BUTTON; j++){
+						guint l_number = g_object_get_data(G_OBJECT(p_model->s_button[j]), "position");
+						gulong l_id = g_object_get_data(G_OBJECT(p_model->s_button[j]), "button_id");
+						g_signal_handler_block(p_model->s_button[l_number],l_id);
+					}
 				}
 			}
 		}
-		p_model->s_placed++;
-		p_model->s_player = (p_model->s_player == s_playerO) ? s_playerX : s_playerO;
-	}
-	g_signal_handler_block(p_model->s_button[p_number], p_id);
-	p_model->s_selectedButton[p_number] = p_id;
+p_model->s_placed++;
+p_model->s_player = (p_model->s_player == s_playerO) ? s_playerX : s_playerO;
+}
+g_signal_handler_block(p_model->s_button[p_number], p_id);
+p_model->s_selectedButton[p_number] = p_id;
 
 }
 
@@ -110,6 +149,10 @@ void new_game(ModelOXO *p_model, guint p_number, gulong p_id){
 	p_model->s_player = s_playerO;
 	p_model->s_image = create_image("images/default.png");
 
+	for(unsigned int i= 0; i < NBR_BUTTON; i++){
+		p_model->s_oCase[i] = 0;
+		p_model->s_xCase[i] = 0;
+	}
 
 	gtk_button_set_image(GTK_BUTTON(p_model->s_button[p_number]), p_model->s_image);
 
@@ -165,14 +208,12 @@ gboolean win(ModelOXO *p_model, int *p_playerO, int p_count){
 			return(TRUE);
 		}
 	}
-
 	/* COLONNE */
 	if(browse_positif_array(p_model, l_xValue, column, 0) != FALSE){
 		if(browse_negatif_array(p_model, l_xValue, p_playerO, 4) &&
 				browse_positif_array(p_model, l_xValue, p_playerO, 4) != FALSE)
 			return(TRUE);
 	}
-
 	/* DIAGONALES */
 	if(browse_positif_array(p_model, l_xValue, diagonal, 0) != FALSE){
 		if(browse_negatif_array(p_model, l_xValue, p_playerO, 3) &&
@@ -184,6 +225,4 @@ gboolean win(ModelOXO *p_model, int *p_playerO, int p_count){
 			return(TRUE);
 	}
 	return(FALSE);
-
 }
-
