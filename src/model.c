@@ -45,7 +45,7 @@ ModelOXO *create_model(unsigned int p_player){
 
 	l_model->s_placed = 0;
 	l_model->s_player = p_player;
-	l_model->s_image = create_image("images/default.png");
+	l_model->s_image = create_image("default.png");
 
 	return(l_model);
 }
@@ -56,20 +56,20 @@ void add_action(ModelOXO *p_model, guint p_number, gulong p_id){
 	if(p_model->s_placed < NBR_BUTTON) {
 
 		if(p_model->s_player == s_playerO){
-			p_model->s_image = create_image("images/o.png");
+			p_model->s_image = create_image("o.png");
 			gtk_button_set_image(GTK_BUTTON(p_model->s_button[p_number]), p_model->s_image);
 			p_model->s_oCase[p_number] = p_number;
 
 			for(unsigned int i = 0; i< NBR_BUTTON; i++){
 				if(win(p_model, p_model->s_oCase, i) != FALSE){
 
-					p_model->s_image = create_image("images/o_gagnant.png");
+					p_model->s_image = create_image("o_gagnant.png");
 					gtk_button_set_image(GTK_BUTTON(p_model->s_button[p_model->s_oPositif]), p_model->s_image);
-					p_model->s_image = create_image("images/o_gagnant.png");
+					p_model->s_image = create_image("o_gagnant.png");
 					gtk_button_set_image(GTK_BUTTON(p_model->s_button[p_model->s_oNegatif]), p_model->s_image);
-					p_model->s_image = create_image("images/x_gagnant.png");
+					p_model->s_image = create_image("x_gagnant.png");
 					gtk_button_set_image(GTK_BUTTON(p_model->s_button[i]),p_model->s_image);
-					p_model->s_image = create_image("images/default.png");
+					p_model->s_image = create_image("default.png");
 
 					i = NBR_BUTTON;
 
@@ -94,20 +94,20 @@ void add_action(ModelOXO *p_model, guint p_number, gulong p_id){
 				}
 			}
 		}else{
-			p_model->s_image = create_image("images/x.png");
+			p_model->s_image = create_image("x.png");
 			gtk_button_set_image(GTK_BUTTON(p_model->s_button[p_number]), p_model->s_image);
 			p_model->s_xCase[p_number] = p_number;
 
 			for(unsigned int i = 0; i< NBR_BUTTON; i++){
 				if(win(p_model, p_model->s_oCase, i) != FALSE){
 
-					p_model->s_image = create_image("images/o_gagnant.png");
+					p_model->s_image = create_image("o_gagnant.png");
 					gtk_button_set_image(GTK_BUTTON(p_model->s_button[p_model->s_oPositif]), p_model->s_image);
-					p_model->s_image = create_image("images/o_gagnant.png");
+					p_model->s_image = create_image("o_gagnant.png");
 					gtk_button_set_image(GTK_BUTTON(p_model->s_button[p_model->s_oNegatif]), p_model->s_image);
-					p_model->s_image = create_image("images/x_gagnant.png");
+					p_model->s_image = create_image("x_gagnant.png");
 					gtk_button_set_image(GTK_BUTTON(p_model->s_button[i]),p_model->s_image);
-					p_model->s_image = create_image("images/default.png");
+					p_model->s_image = create_image("default.png");
 
 					i = NBR_BUTTON;
 
@@ -147,7 +147,7 @@ void new_game(ModelOXO *p_model, guint p_number, gulong p_id){
 
 	p_model->s_placed = 0;
 	p_model->s_player = s_playerO;
-	p_model->s_image = create_image("images/default.png");
+	p_model->s_image = create_image("default.png");
 
 	for(unsigned int i= 0; i < NBR_BUTTON; i++){
 		p_model->s_oCase[i] = 0;

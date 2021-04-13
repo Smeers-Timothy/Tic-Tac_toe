@@ -64,7 +64,7 @@ GtkWidget *create_window(){
 
 GtkButton *load_image_button(){
 
-	GdkPixbuf *l_fileImage = gdk_pixbuf_new_from_file("images/default.png", NULL);
+	GdkPixbuf *l_fileImage = gdk_pixbuf_new_from_file("default.png", NULL);
 
 	if(l_fileImage == NULL){
 		printf("Erreur de chargement de l’image !\n");
