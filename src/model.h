@@ -20,18 +20,34 @@ typedef enum Player_t{
 	s_playerX = 1/**< X */
 }Player;
 
+///**
+// * @struct field_t
+// * @brief Implémentation de tableau de valeur pour le gameboard
+// *
+// */
+//typedef struct field_t{
+//	int s_xCase[NBR_BUTTON+1];
+//	int s_oCase[NBR_BUTTON+1];
+//}Field;
+
 /**
  * @struct model_t
  * @brief Implémentation du modèle pour le OXO.
  *
  */
 typedef struct model_t{
-    Player s_player; /**< Le joueur */
+//	Field s_field;
+	int s_xCase[NBR_BUTTON+1];
+	int s_oCase[NBR_BUTTON+1];
+	int s_oPositif;
+	int s_oNegatif;
+	int s_selectedButton[NBR_BUTTON+1]; /**< Bouton sélectionner */
 	unsigned int s_placed; /**< Le nombre de bouton déja instancier */
+    Player s_player; /**< Le joueur */
 	GtkWidget *s_image; /**< L'image à afficher  */
 	GtkWidget *s_button[NBR_BUTTON]; /**< Le tableau de bouton de jeux */
 	GtkWidget *s_newGameButton; /**< Le bouton de nouvelle partie */
-	int s_selectedButton[NBR_BUTTON+1];
+
 }ModelOXO;
 
 /**
@@ -81,5 +97,46 @@ void add_action(ModelOXO *p_model, guint p_number, gulong p_id);
  * @param p_id L'id du signal
  */
 void new_game(ModelOXO *p_model, guint p_number, gulong p_id);
+
+/**
+ * @fn gboolean win(ModelOXO*, int*, int)
+ * @brief Permet de vérifier si il y a une possibilité de gagnat
+ *
+ * @pre
+ * @post
+ * @param p_model Un pointeur sur le modele à prendre en compte
+ * @param p_playerO le joueur O
+ * @param p_count une variable d'incrémentation
+ * @return TRUE si la partie est gagnée sinon FALSE
+ */
+gboolean win(ModelOXO *p_model, int *p_playerO, int p_count);
+
+/**
+ * @fn gboolean browse_array(int, int*, int)
+ * @brief Permet de parcourir un tableau pour y trouver une occurence
+ *
+ * @pre
+ * @post
+ * @param p_model Un pointeur sur le modele à prendre en compte
+ * @param p_player L'occurence à trouver
+ * @param tab Le tableau à parcourir
+ * @param p_value la valeur à incrémenté pour trouver l'occurence
+ * @return TRUE si une occurence à été trouvé sinon FALSE
+ */
+gboolean browse_positif_array(ModelOXO *p_model, int p_player, int *tab, int p_value);
+
+/**
+ * @fn gboolean browse_negatif_array(int, int*, int)
+ * @brief Permet de parcourir un tableau pour y trouver une occurence
+ *
+ * @pre
+ * @post
+ * @param p_model Un pointeur sur le modele à prendre en compte
+ * @param p_player L'occurence à trouver
+ * @param tab Le tableau à parcourir
+ * @param p_value la valeur à décrémenté pour trouver l'occurence
+ * @return TRUE si une occurence à été trouvé sinon FALSE
+ */
+gboolean browse_negatif_array(ModelOXO *p_model, int p_player, int *tab, int p_value);
 
 #endif /* MODEL_H_ */

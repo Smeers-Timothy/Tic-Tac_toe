@@ -55,17 +55,26 @@ int main(int argc, char **argv){
 	create_table(s_view, s_model->s_button);
 
 	gulong l_id;
-	gulong l_new_game;
 
 	for(unsigned int i = 0; i< NBR_BUTTON; i++){
 		l_id = g_signal_connect(G_OBJECT(s_model->s_button[i]), "clicked", G_CALLBACK(click_grid), s_controller);
 		g_object_set_data(G_OBJECT(s_model->s_button[i]), "button_id", (gpointer)l_id);
 		g_object_set_data(G_OBJECT(s_model->s_button[i]), "position", (gpointer)i);
 	}
-	l_new_game = g_signal_connect(G_OBJECT(s_model->s_newGameButton), "clicked", G_CALLBACK(click_new_game), s_model);
+	g_signal_connect(G_OBJECT(s_model->s_newGameButton), "clicked", G_CALLBACK(click_new_game), s_model);
 
 	create_principal_box(s_view);
 	draw_window(s_view, s_window);
+
+//	unsigned int i;
+//	for(i = 0; i< sizeof(NBR_BUTTON);i++){
+//		if(win(s_model, s_model->s_oCase, i) == TRUE)
+//			printf("j'ai réussi\n");
+//		else
+//			printf("rater\n");
+//	}
+
+
 
 	gtk_main();
 

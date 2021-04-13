@@ -38,6 +38,11 @@ ModelOXO *create_model(unsigned int p_player){
 		return(NULL);
 	}
 
+	for(unsigned int i = 0; i < NBR_BUTTON+1; i++){
+		l_model->s_oCase[i] = -1;
+		l_model->s_xCase[i] = -1;
+	}
+
 	l_model->s_placed = 0;
 	l_model->s_player = p_player;
 	l_model->s_image = create_image("images/default.png");
@@ -53,9 +58,40 @@ void add_action(ModelOXO *p_model, guint p_number, gulong p_id){
 		if(p_model->s_player == s_playerO){
 			p_model->s_image = create_image("images/o.png");
 			gtk_button_set_image(GTK_BUTTON(p_model->s_button[p_number]), p_model->s_image);
+			p_model->s_oCase[p_number] = p_number;
+
+			for(unsigned int i = 0; i< NBR_BUTTON; i++){
+				if(win(p_model, p_model->s_oCase, i) != FALSE){
+					printf("O negatif : %d\n", p_model->s_oNegatif);
+					printf("O positif : %d\n", p_model->s_oPositif);
+					printf("X : %d\n", i);
+					p_model->s_image = create_image("images/o_gagnant.png");
+					gtk_button_set_image(GTK_BUTTON(p_model->s_button[p_model->s_oPositif]), p_model->s_image);
+					p_model->s_image = create_image("images/o_gagnant.png");
+					gtk_button_set_image(GTK_BUTTON(p_model->s_button[p_model->s_oNegatif]), p_model->s_image);
+					p_model->s_image = create_image("images/x_gagnant.png");
+					gtk_button_set_image(GTK_BUTTON(p_model->s_button[i]), p_model->s_image);
+				}
+			}
+
 		}else{
 			p_model->s_image = create_image("images/x.png");
 			gtk_button_set_image(GTK_BUTTON(p_model->s_button[p_number]), p_model->s_image);
+			p_model->s_xCase[p_number] = p_number;
+
+			for(unsigned int i = 0; i< NBR_BUTTON; i++){
+				if(win(p_model, p_model->s_oCase, i) != FALSE){
+					printf("O negatif : %d\n", p_model->s_oNegatif);
+					printf("O positif : %d\n", p_model->s_oPositif);
+					printf("X : %d\n", i);
+					p_model->s_image = create_image("images/o_gagnant.png");
+					gtk_button_set_image(GTK_BUTTON(p_model->s_button[p_model->s_oPositif]), p_model->s_image);
+					p_model->s_image = create_image("images/o_gagnant.png");
+					gtk_button_set_image(GTK_BUTTON(p_model->s_button[p_model->s_oNegatif]), p_model->s_image);
+					p_model->s_image = create_image("images/x_gagnant.png");
+					gtk_button_set_image(GTK_BUTTON(p_model->s_button[i]), p_model->s_image);
+				}
+			}
 		}
 		p_model->s_placed++;
 		p_model->s_player = (p_model->s_player == s_playerO) ? s_playerX : s_playerO;
@@ -85,5 +121,69 @@ void new_game(ModelOXO *p_model, guint p_number, gulong p_id){
 			l_tmp = p_model->s_selectedButton[p_number];
 		}
 	}
+}
+
+
+gboolean browse_positif_array(ModelOXO *p_model, int p_player, int *tab, int p_value){
+
+	for(unsigned int i = 0; i <NBR_BUTTON; i++){
+		if(tab[i] != -1){
+			if(tab[i]+p_value == p_player){
+				p_model->s_oNegatif = tab[i];
+				return(TRUE);
+			}
+		}
+	}
+	return(FALSE);
+}
+
+gboolean browse_negatif_array(ModelOXO *p_model, int p_player, int *tab, int p_value){
+
+	for(unsigned int i = 0; i < NBR_BUTTON; i++){
+		if(tab[i] != -1){
+			if(tab[i]-p_value == p_player){
+				p_model->s_oPositif = tab[i];
+				return(TRUE);
+			}
+		}
+	}
+	return(FALSE);
+}
+
+gboolean win(ModelOXO *p_model, int *p_playerO, int p_count){
+
+	int row[8] = {1,2,5,6,9,10,13,14};
+	int column[8] = {4,5,6,7,8,9,10,11};
+	int diagonal[4] = {5,6,9,10};
+
+	int l_xValue = p_model->s_xCase[p_count];
+
+	/* LIGNE */
+	if(browse_positif_array(p_model, l_xValue, row, 0) != FALSE){
+		if(browse_negatif_array(p_model, l_xValue, p_playerO, 1) &&
+				browse_positif_array(p_model, l_xValue, p_playerO, 1) != FALSE){
+			return(TRUE);
+		}
+	}
+
+	/* COLONNE */
+	if(browse_positif_array(p_model, l_xValue, column, 0) != FALSE){
+		if(browse_negatif_array(p_model, l_xValue, p_playerO, 4) &&
+				browse_positif_array(p_model, l_xValue, p_playerO, 4) != FALSE)
+			return(TRUE);
+	}
+
+	/* DIAGONALES */
+	if(browse_positif_array(p_model, l_xValue, diagonal, 0) != FALSE){
+		if(browse_negatif_array(p_model, l_xValue, p_playerO, 3) &&
+				browse_positif_array(p_model, l_xValue, p_playerO, 3) != FALSE)
+			return(TRUE);
+
+		if(browse_negatif_array(p_model, l_xValue, p_playerO, 5) &&
+				browse_positif_array(p_model, l_xValue, p_playerO, 5) != FALSE)
+			return(TRUE);
+	}
+	return(FALSE);
+
 }
 
